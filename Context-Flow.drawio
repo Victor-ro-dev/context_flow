@@ -1,0 +1,76 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9">
+  <diagram name="Página-1" id="vBGLH5-doSc-d2WDFmNK">
+    <mxGraphModel dx="1226" dy="620" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6pMVMH_Kc___NINW7BH2-3" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="6pMVMH_Kc___NINW7BH2-2" value="Requisição">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="NextJS/Frontend" vertex="1">
+          <mxGeometry height="60" width="120" x="310" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-6" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="6pMVMH_Kc___NINW7BH2-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-7" connectable="0" parent="6pMVMH_Kc___NINW7BH2-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Envio da Mensagem" vertex="1">
+          <mxGeometry relative="1" x="-0.3667" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Django-API/API" vertex="1">
+          <mxGeometry height="60" width="120" x="310" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-9" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="6pMVMH_Kc___NINW7BH2-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-12" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="6pMVMH_Kc___NINW7BH2-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="RabbitMQ" vertex="1">
+          <mxGeometry height="60" width="120" x="310" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-13" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-16" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="6pMVMH_Kc___NINW7BH2-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-17" connectable="0" parent="6pMVMH_Kc___NINW7BH2-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Processamento" vertex="1">
+          <mxGeometry relative="1" x="-0.232" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" value="Celery" vertex="1">
+          <mxGeometry height="60" width="120" x="310" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Sistema de Mensageria, que pega e guarda a mensagem" vertex="1">
+          <mxGeometry height="30" width="220" x="520" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Consome a mensagem e executa a ação" vertex="1">
+          <mxGeometry height="30" width="200" x="540" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-19" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="6pMVMH_Kc___NINW7BH2-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;" value="FastAPI&lt;br&gt;Chuncking + Embbending" vertex="1">
+          <mxGeometry height="70" width="180" x="50" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-18" parent="1" style="shape=datastore;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;" value="PostgresSQL" vertex="1">
+          <mxGeometry height="105" width="100" x="150" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-21" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="&quot;Sistema S3&quot;" vertex="1">
+          <mxGeometry height="100" width="100" x="30" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-22" edge="1" parent="1" source="6pMVMH_Kc___NINW7BH2-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="6pMVMH_Kc___NINW7BH2-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6pMVMH_Kc___NINW7BH2-25" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=30;" value="Sistema de Upload de Documentos" vertex="1">
+          <mxGeometry height="30" width="420" x="160" y="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
