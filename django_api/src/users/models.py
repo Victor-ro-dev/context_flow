@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -47,7 +48,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(max_length=150, unique=True)
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z0-9._-]+$',
+                message='Username pode conter apenas letras, números, pontos, hífens e underscores.',
+                code='invalid_username'
+            )
+        ]
+    )
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='FREE')
     is_active = models.BooleanField(default=True)
@@ -55,7 +66,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = UserManager()
+    objects: UserManager = UserManager() # type: ignore[assignment]
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
