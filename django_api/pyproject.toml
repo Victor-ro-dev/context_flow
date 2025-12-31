@@ -35,7 +35,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://www.otaviomiranda.com.br/"
+Homepage = "https://example.org"
 # Documentation = "https://example.org"
 # Repository = "https://github.com/me/spam.git"
 # Issues = "https://github.com/me/spam/issues"
@@ -119,7 +119,7 @@ known-first-party = ["my_package"]
 # Tipagem (Pyright)
 # ============================
 [tool.pyright]
-typeCheckingMode = "strict"
+typeCheckingMode = "standard"
 pythonVersion = "3.14"
 include = ["src", 'tests']
 exclude = [

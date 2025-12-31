@@ -193,28 +193,14 @@ exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__", "**/mi
 
 Para manter o layout do template:
 
-- `uv run django-admin startproject config src`
+- `uv run django-admin startproject core src`
 
 Isso cria:
 
 - `src/manage.py`
-- `src/config/` (settings/asgi/wsgi/urls)
+- `src/core/` (settings/asgi/wsgi/urls)
 
-### 4.4 Carregar `.env` cedo no Django
-
-Este template já usa `python-dotenv` (veja o padrão em [src/my_package/my_module.py](src/my_package/my_module.py)).
-No Django, carregue o `.env` cedo (antes de ler settings), normalmente em:
-
-- `src/manage.py`
-- `src/config/asgi.py`
-- `src/config/wsgi.py`
-
-### 4.5 Rodar migrações e subir
-
-- `uv run python src/manage.py migrate`
-- `uv run python src/manage.py runserver`
-
-### 4.6 Primeiro app (primeira entrega guiada)
+### 4.4 Primeiro app (primeira entrega guiada)
 
 Criar app `users` dentro de `src/`:
 
@@ -234,6 +220,25 @@ Testes:
   - `uv add pytest-django`
   - configurar `DJANGO_SETTINGS_MODULE`
   - `uv run pytest`
+
+### 4.5 Carregar `.env` cedo no Django
+
+Este template já usa `python-dotenv` (veja o padrão em [src/my_package/my_module.py](src/my_package/my_module.py)).
+No Django, carregue o `.env` cedo (antes de ler settings), normalmente em:
+
+- `src/manage.py`
+- `src/config/asgi.py`
+- `src/config/wsgi.py`
+
+### 4.6 Rodar migrações e subir
+
+- `uv run python src/manage.py makemigrations 'nome do package'`
+- `uv run python src/manage.py migrate`
+- `uv run python src/manage.py runserver`
+
+### 4.7 Criar SuperUser
+
+- `uv run python src/manage.py createsuperuser`
 
 ---
 

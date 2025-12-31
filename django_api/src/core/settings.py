@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -45,6 +46,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
+    'drf_spectacular',
 
     'users',
     'organizations',
@@ -52,6 +55,23 @@ INSTALLED_APPS = [
     'documents',
     'queries',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':  timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "SIGNING_KEY": os.getenv('JWT_SECRET_KEY', SECRET_KEY),
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
