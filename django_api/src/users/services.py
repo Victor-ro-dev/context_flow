@@ -51,7 +51,7 @@ def register_user(user_dto: UserRegistrationDTO) -> User:
         current_period_end=now + timedelta(days=30)
     )
 
-    period = now.strftime("%Y-%m-%d")  # Ex: "2025-12"
+    period = now.strftime("%Y-%m-%d")  # Ex: "2025-12-31"
     Usage.objects.get_or_create(
         user=user,
         organization=None,
