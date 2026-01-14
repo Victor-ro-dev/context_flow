@@ -4,64 +4,112 @@ from typing import TYPE_CHECKING
 from django.db import transaction
 from django.utils import timezone
 
-from plans.models import Plan, Subscription, Usage
-from users.models import User
+from users.exceptions import (
+    InvalidCredentialsException,
+    PlanNotFoundException,
+    UserAlreadyExistsException,
+    UserNotFoundException,
+)
+from users.repositories import (
+    PlanRepository,
+    SubscriptionRepository,
+    UsageRepository,
+    UserRepository,
+)
 
 if TYPE_CHECKING:
-    from dtos import UserRegistrationDTO
+    from users.dtos import UserLoginDTO, UserRegistrationDTO
 
 
-@transaction.atomic
-def register_user(user_dto: UserRegistrationDTO) -> User:
-    """
-    Registers a new user and creates a subscription based on the selected plan tier.
+class AuthService:
+    """Service para operações de autenticação e registro"""
 
-    Args:
-        email (str): The email of the user.
-        username (str): The username of the user.
-        password (str): The password for the user.
-        plan_tier (str): The tier of the plan to subscribe to. Defaults to "FREE".
+    @staticmethod
+    @transaction.atomic
+    def register_user(user_dto: UserRegistrationDTO):
+        """
+        Registra novo usuário e cria subscription.
 
-    Returns:
-        User: The created User instance.
-    """
-    # Create the user
-    user = User.objects.create_user(
-        email=user_dto.email,
-        username=user_dto.username,
-        password=user_dto.password,
-        role=user_dto.plan_tier
-    )
+        Args:
+            user_dto: Data Transfer Object com dados do usuário
 
-    # Retrieve the selected plan
-    try:
-        plan = Plan.objects.get(tier=user_dto.plan_tier, plan_type=Plan.PlanChoices.INDIVIDUAL)
-    except Plan.DoesNotExist:
-        raise ValueError(f"Plano '{user_dto.plan_tier}' não existe.")
+        Returns:
+            User: Usuário criado
 
-    now = timezone.now()
+        Raises:
+            UserAlreadyExistsException: Se email ou username já existem
+            PlanNotFoundException: Se plano não existe
+        """
+        # Validação de negócio: email já existe?
+        if UserRepository.email_exists(user_dto.email):
+            raise UserAlreadyExistsException("Email já em uso")
 
-    # Create a subscription for the user
-    Subscription.objects.create(
-        user=user,
-        plan=plan,
-        status='ACTIVE',
-        organization=None,
-        current_period_start=now,
-        current_period_end=now + timedelta(days=30)
-    )
+        # Validação de negócio: username já existe?
+        if UserRepository.username_exists(user_dto.username):
+            raise UserAlreadyExistsException("Username já em uso")
 
-    period = now.strftime("%Y-%m-%d")  # Ex: "2025-12-31"
-    Usage.objects.get_or_create(
-        user=user,
-        organization=None,
-        period=period,
-        defaults={
-            "documents_uploaded": 0,
-            "queries_executed": 0,
-            "storage_used_mb": 0,
-            "tokens_used": 0,
-        },
-    )
+        # Validação de negócio: plano existe?
+        plan = PlanRepository.get_by_tier(user_dto.plan_tier)
+        if not plan:
+            raise PlanNotFoundException(f"Plano '{user_dto.plan_tier}' não existe")
 
-    return user
+        # Cria usuário
+        user = UserRepository.create(
+            email=user_dto.email,
+            username=user_dto.username,
+            password=user_dto.password,
+            role=user_dto.plan_tier
+        )
+
+        # Cria subscription
+        now = timezone.now()
+        SubscriptionRepository.create(
+            user=user,
+            plan=plan,
+            status='ACTIVE',
+            current_period_start=now,
+            current_period_end=now + timedelta(days=30)
+        )
+
+        # Cria usage inicial
+        period = now.strftime("%Y-%m-%d")
+        UsageRepository.get_or_create_period_usage(
+            user=user,
+            period=period
+        )
+
+        return user
+
+    @staticmethod
+    def authenticate_user(user_dto: UserLoginDTO):
+        """
+        Autentica usuário por email e senha.
+
+        Args:
+            user_dto: Data Transfer Object com email e senha
+
+        Returns:
+            User: Usuário autenticado
+
+        Raises:
+            UserNotFoundException: Se usuário não existe
+            InvalidCredentialsException: Se senha está errada ou usuário inativo
+        """
+        # Busca usuário
+        user = UserRepository.get_by_email(user_dto.email)
+        if not user:
+            raise UserNotFoundException("Usuário não encontrado")
+
+        # Valida se usuário está ativo
+        if not user.is_active:
+            raise InvalidCredentialsException("Usuário inativo")
+
+        # Valida senha
+        if not user.check_password(user_dto.password):
+            raise InvalidCredentialsException("Senha incorreta")
+
+        # Atualiza último login
+        user.last_login = timezone.now()
+        user.save(update_fields=['last_login'])
+
+        return user

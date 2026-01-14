@@ -64,6 +64,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'EXCEPTION_HANDLER': 'core.exception_handler.custom_exception_handler',
 }
 
 SIMPLE_JWT = {
@@ -71,6 +72,16 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     "AUTH_HEADER_TYPES": ("Bearer",),
     "SIGNING_KEY": os.getenv('JWT_SECRET_KEY', SECRET_KEY),
+    "ALGORITHM": "HS256",
+    "ROTATE_REFRESH_TOKENS": True,
+
+    "AUTH_COOKIE": "jwt-access",
+    "AUTH_COOKIE_REFRESH": "jwt-refresh",
+    "AUTH_COOKIE_SECURE": True,
+    "AUTH_COOKIE_HTTP_ONLY": True,
+    "AUTH_COOKIE_SAMESITE": "Lax",
+    "AUTH_COOKIE_PATH": "/",
+    "AUTH_COOKIE_DOMAIN": None,
 }
 
 MIDDLEWARE = [

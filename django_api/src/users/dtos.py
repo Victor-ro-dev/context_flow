@@ -7,3 +7,9 @@ class UserRegistrationDTO:
     username: str
     password: str
     plan_tier: str = "FREE"
+
+@dataclass(frozen=True)
+class UserLoginDTO:
+    email: str
+    password: str
+    remember_me: bool = False
