@@ -98,7 +98,7 @@ class UnauthorizedAccessException(BaseException):
             message = "You do not have permission to perform this action."
         super().__init__(
             message=message,
-            status_code=status.HTTP_403_FORBIDDEN,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             error_code="unauthorized_access",
         )
 

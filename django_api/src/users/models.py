@@ -40,12 +40,16 @@ class UserManager(BaseUserManager["User"]):
         return self.create_user(email, username, password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
-    ROLE_CHOICES = [
-        ('ADMIN', 'Admin'),
-        ('FREE', 'Free'),
-        ('PRO', 'Pro'),
-        ('PREMIUM', 'Premium'),
-    ]
+
+    class PlanChoices(models.TextChoices):
+        ADMIN = 'ADMIN', 'Admin'
+        FREE = 'FREE', 'Free'
+        PRO = 'PRO', 'Pro'
+        PREMIUM = 'PREMIUM', 'Premium'
+
+    class UserTypeChoices(models.TextChoices):
+        INDIVIDUAL = 'INDIVIDUAL', 'Individual'
+        ORGANIZATION = 'ORGANIZATION', 'Organização'
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(
@@ -60,7 +64,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         ]
     )
     email = models.EmailField(unique=True)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='FREE')
+    plan = models.CharField(max_length=10, choices=PlanChoices, default=PlanChoices.FREE)
+    user_type = models.CharField(max_length=50, choices=UserTypeChoices, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

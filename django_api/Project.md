@@ -253,3 +253,9 @@ No Django, carregue o `.env` cedo (antes de ler settings), normalmente em:
    - `uv run ruff check .`
    - `uv run pyright`
    - `uv run pytest`
+   - `uv run python src/manage.py test users.tests --verbosity=2`
+
+## 6) DOCS
+
+1. Swagger: `http://127.0.0.1:8000/api/docs/swagger/` or `http://127.0.0.1:8000/api/redoc/swagger/`
+2. Django Admin: `http://127.0.0.1:8000/admin/login/?next=/admin/login`

@@ -10,30 +10,19 @@ class Plan(models.Model):
     """
     Planos de assinatura (individual ou organização).
     """
-    class TierChoices(models.TextChoices):
+    class PlanChoices(models.TextChoices):
         FREE = "FREE", "Grátis"
         PRO = "PRO", "Profissional"
         ENTERPRISE = "ENTERPRISE", "Empresarial"
 
-    class PlanChoices(models.TextChoices):
+    class UserChoices(models.TextChoices):
         INDIVIDUAL = "INDIVIDUAL", "Individual"
         ORGANIZATION = "ORGANIZATION", "Organização"
 
-    TIER_CHOICES = [
-        (TierChoices.FREE, "FREE"),
-        (TierChoices.PRO, "PRO"),
-        (TierChoices.ENTERPRISE, "ENTERPRISE")
-        ]
-
-    PLAN_CHOICES = [
-        (PlanChoices.INDIVIDUAL, "INDIVIDUAL"),
-        (PlanChoices.ORGANIZATION, "ORGANIZATION")
-        ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
-    tier = models.CharField(max_length=50, choices=TIER_CHOICES)
-    plan_type = models.CharField(max_length=50, choices=PLAN_CHOICES, default=PlanChoices.INDIVIDUAL)
+    tier = models.CharField(max_length=50, choices=PlanChoices, default=PlanChoices.FREE)
+    plan_type = models.CharField(max_length=50, choices=UserChoices, default=UserChoices.INDIVIDUAL)
     max_documents = models.IntegerField(default=10)
     max_storage_mb = models.IntegerField(default=100)
     max_queries = models.IntegerField(default=100)
@@ -68,17 +57,12 @@ class Subscription(models.Model):
         CANCELED = "CANCELED", "Cancelado"
         EXPIRED = "EXPIRED", "Expirado"
 
-    STATUS_CHOICES = [
-        (StatusChoices.ACTIVE, "ACTIVE"),
-        (StatusChoices.CANCELED, "CANCELED"),
-        (StatusChoices.EXPIRED, "EXPIRED")
-        ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name='subscriptions')
     organization = models.ForeignKey('organizations.Organization', on_delete=models.CASCADE, null=True, blank=True, related_name='subscriptions')
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, related_name='subscriptions')
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=StatusChoices.ACTIVE)
+    status = models.CharField(max_length=50, choices=StatusChoices, default=StatusChoices.ACTIVE)
     current_period_start = models.DateTimeField(auto_now_add=True)
     current_period_end = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

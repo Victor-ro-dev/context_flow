@@ -1,8 +1,3 @@
-"""
-Repository Layer - Acesso a dados com abstração do ORM.
-Centraliza todas as queries ao banco de dados.
-"""
-
 from typing import Optional
 
 from plans.models import Plan, Subscription, Usage
@@ -37,20 +32,22 @@ class UserRepository:
         email: str,
         username: str,
         password: str,
-        role: str = "USER"
+        plan: str = User.PlanChoices.FREE,
+        user_type: str = User.UserTypeChoices.INDIVIDUAL
     ) -> User:
         """Cria novo usuário"""
         return User.objects.create_user(
             email=email,
             username=username,
             password=password,
-            role=role
+            plan=plan,
+            user_type=user_type
         )
 
     @staticmethod
     def get_active_users() -> list[User]:
         """Retorna todos os usuários ativos"""
-        return User.objects.filter(is_active=True)
+        return list(User.objects.filter(is_active=True))
 
 
 class PlanRepository:
@@ -61,7 +58,7 @@ class PlanRepository:
         """Busca plano por tier (FREE, PRO, PREMIUM)"""
         return Plan.objects.filter(
             tier=tier,
-            plan_type=Plan.PlanChoices.INDIVIDUAL
+            plan_type=Plan.UserChoices.INDIVIDUAL
         ).first()
 
 
@@ -72,7 +69,7 @@ class SubscriptionRepository:
     def create(
         user: User,
         plan: Plan,
-        status: str = "ACTIVE",
+        status: str = Subscription.StatusChoices.ACTIVE,
         current_period_start=None,
         current_period_end=None
     ) -> Subscription:
@@ -94,7 +91,7 @@ class UsageRepository:
     def get_or_create_period_usage(
         user: User,
         period: str,
-        defaults: dict = None
+        defaults: dict | None = None
     ) -> Usage:
         """Pega ou cria usage para um período"""
         if defaults is None:

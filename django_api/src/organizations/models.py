@@ -36,16 +36,10 @@ class OrganizationMember(models.Model):
         ADMIN = 'ADMIN', 'Admin'
         MEMBER = 'MEMBER', 'Member'
 
-    ROLE_CHOICES = [
-        (RoleChoices.OWNER, 'Owner'),
-        (RoleChoices.ADMIN, 'Admin'),
-        (RoleChoices.MEMBER, 'Member'),
-    ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='members')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='organization_memberships')
-    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default=RoleChoices.MEMBER)
+    role = models.CharField(max_length=50, choices=RoleChoices, default=RoleChoices.MEMBER)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -30,6 +30,7 @@ dependencies = [
     "django>=6.0",
     "django-cors-headers>=4.9.0",
     "djangorestframework>=3.16.1",
+    "drf-spectacular>=0.29.0",
     "psycopg[binary]>=3.3.2",
     "python-dotenv>=1.1.0",
 ]
@@ -130,6 +131,9 @@ exclude = [
     "**/node_modules",
     "**/__pycache__",
 ]
+
+reportIncompatibleMethodOverride = false
+reportUnreachable = false
 venv = ".venv"
 venvPath = "."
 executionEnvironments = [{ root = "src" }]

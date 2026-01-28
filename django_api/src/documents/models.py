@@ -28,34 +28,21 @@ class Document(models.Model):
     class ScopeChoices(models.TextChoices):
         USER = "USER", "Usuário"
         ORGANIZATION = "ORGANIZATION", "Organização"
-    SCOPE_CHOICES = [
-        (ScopeChoices.USER, "USER"),
-        (ScopeChoices.ORGANIZATION, "ORGANIZATION"),
-        ]
-
     class StatusChoices(models.TextChoices):
         UPLOADED = "UPLOADED", "Carregado"
         PROCESSING = "PROCESSING", "Processando"
         INDEXED = "INDEXED", "Indexado"
         FAILED = "FAILED", "Falhou"
 
-    STATUS_CHOICES = [
-        (StatusChoices.UPLOADED, "UPLOADED"),
-        (StatusChoices.PROCESSING, "PROCESSING"),
-        (StatusChoices.INDEXED, "INDEXED"),
-        (StatusChoices.FAILED, "FAILED"),
-        ]
-
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='documents', help_text="Usuário que carregou o documento.")
     organization = models.ForeignKey('organizations.Organization', on_delete=models.CASCADE, related_name='documents', null=True, blank=True, help_text="Organização associada ao documento, se aplicável.")
-    scope = models.CharField(max_length=20, choices=SCOPE_CHOICES, default=ScopeChoices.USER, help_text="Escopo do documento: usuário ou organização.")
+    scope = models.CharField(max_length=20, choices=ScopeChoices, default=ScopeChoices.USER, help_text="Escopo do documento: usuário ou organização.")
     title = models.CharField(max_length=255, help_text="Título do documento.")
     file_key = models.FileField(upload_to='documents/', help_text="Chave no MinIO onde o documento está armazenado.")
     file_url = models.URLField(max_length=2048, blank=True, help_text="URL acessível publicamente para o documento armazenado.")
     mime_type = models.CharField(max_length=100, help_text="Tipo MIME do documento.", default="application/pdf")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=StatusChoices.UPLOADED, help_text="Status atual do documento no fluxo de processamento.")
+    status = models.CharField(max_length=20, choices=StatusChoices, default=StatusChoices.UPLOADED, help_text="Status atual do documento no fluxo de processamento.")
     metadata = models.JSONField(blank=True, default=dict, help_text="Metadados adicionais relacionados ao documento.") # type: ignore
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
